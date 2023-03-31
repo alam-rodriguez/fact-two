@@ -24,6 +24,7 @@ const Pedido = ({viewticket, setViewticket}) => {
     useEffect(()=>{
       if( ordenCurrent.length > 0 ){
         console.log(ordenCurrent);
+        console.log('aqui');
       }
     }, [ordenCurrent])
 
@@ -48,7 +49,8 @@ const Pedido = ({viewticket, setViewticket}) => {
       setPedido(state => ({...state, totaldefinitivo: total}))
      
       // setPedido(state => ({...state, totaldefinitivo: total}))
-      // console.log(pedido)
+      // console.log(pedido);
+      console.log(total);
     }, [totales] );
 
 		const handleClickViewTicket = () => {
@@ -67,11 +69,14 @@ const Pedido = ({viewticket, setViewticket}) => {
       setViewticket(false);
     }
 
+    const handleChangeLugar = (e) => setPedido(state => ({...state, lugar: e.target.value}));
+
     if(design == 'computer'){
       if( ordenCurrent.length > 0){
         return (
             <div>
                 <div className='border-0 border-bottom'>
+
               { ordenCurrent.map((orden, i)=>(
                   <PedidoItem key={i} orden={orden} totales={totales} setTotales={setTotales} />
                   // <div key={i} className='px-4  py-2'>
@@ -104,7 +109,7 @@ const Pedido = ({viewticket, setViewticket}) => {
                   //         : null */}
                   // </div>
                   ))
-                  }
+                }
               </div>
               <div className='d-flex justify-content-between p-4'>
                 <p className='fw-bolder'>Total</p>
@@ -116,8 +121,8 @@ const Pedido = ({viewticket, setViewticket}) => {
     }else if(design == 'mobile') {
     if(viewticket ){
       return(
-        <div className='position-relative min-vh-100 min-vw-100 bg-white'>
-          <div className='border-0 border-bottom'>
+        <div className='position-relative min-vh-100 min-vw-100 bg-white p-0'>
+          <div className='border-0 border-bottom m-0'>
             <header className='d-flex justify-content-between bg-success p-4 shadow-lg'>
               <div className='d-flex align-items-center'>
                 <IoMdArrowBack className='fs-3 text-white' onClick={handleClickBack}/>
@@ -132,7 +137,14 @@ const Pedido = ({viewticket, setViewticket}) => {
                 <IoMdMore className='fs-3 mt-2 text-white' />
               </div>
             </header>
-              { ordenCurrent.map((orden, i)=>(
+            <div className='d-flex justify-content-center border-bottom'>
+              <select className='btn col-11 text-start' onChange={handleChangeLugar}>
+                <option value="Comer dentro">Comer dentro</option>
+                <option value="Para llevar">Para llevar</option>
+                <option value="A domicilio">A domicilio</option>
+              </select>
+            </div>
+            { ordenCurrent.map((orden, i)=>(
                   <PedidoItem key={i} orden={orden} totales={totales} setTotales={setTotales} />
                   // <div key={i} className='px-4  py-2'>
                   //     <p className='m-0 fw-bold'>{orden.nombre}<span className='text-secondary'> X {orden.cantidad}</span></p>
@@ -164,7 +176,7 @@ const Pedido = ({viewticket, setViewticket}) => {
                   //         : null */}
                   // </div>
                   ))
-                  }
+                }
               </div>
               <div className='d-flex justify-content-between p-4'>
                 <p className='fw-bolder'>Total</p>
@@ -173,7 +185,50 @@ const Pedido = ({viewticket, setViewticket}) => {
             </div>
       )
     }else {
-      return <></>
+      return (
+        <div className='d-none'>
+            <div className='border-0 border-bottom'>
+
+          { ordenCurrent.map((orden, i)=>(
+              <PedidoItem key={i} orden={orden} totales={totales} setTotales={setTotales} />
+              // <div key={i} className='px-4  py-2'>
+              //     <p className='m-0 fw-bold'>{orden.nombre}<span className='text-secondary'> X {orden.cantidad}</span></p>
+              //     {/* {console.log(orden.adicicionales)} */}
+              //     { Object.keys(orden).map((item, i)=>(
+              //         // console.log(item.adicicionales)
+              //         (item != 'nombre' && item != 'cantidad' && item != 'nota' && item != 'adicicionales') ?
+                          
+              //             <p key={i} className='d-inline-block m-0 fs-6 text-secondary'>{item},</p>
+                      
+              //         : null
+              //     )) 
+              //     }
+              //     { Object.keys(orden.adicicionales).map((item2, i)=>(
+              //         <p key={i} className='d-inline-block m-0 fs-6 text-secondary'>{item2} </p>
+              //     ))
+                      
+              //     }
+              //     {/* { Object.keys(orden).map((item)=>{
+              //         if(item != 'nombre' && item != 'cantidad' && item != 'nota' && item != 'adicicionales'){
+                //             return <p>{item}</p>
+              //         }
+              //     })} */}
+              //     {/* (item == 'adicicionales') ? 
+              //             Object.keys(item).map((item2)=>(
+                //                 // console.log(item2)
+              //                 <p key={item[item2]} className='d-inline-block'>{item[item2]},</p>
+              //             ))
+              //         : null */}
+              // </div>
+              ))
+            }
+          </div>
+          <div className='d-flex justify-content-between p-4'>
+            <p className='fw-bolder'>Total</p>
+            <p className='fw-bolder'>{pedido.totaldefinitivo}.00</p>
+          </div>
+        </div>
+      )
     }
   }
 }

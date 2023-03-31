@@ -43,6 +43,7 @@ const ArticuloInfo = () => {
     }
     
     const handleClickGuardar = () => {
+      
       Object.keys(orden).map((i)=>{
         // if(i != 'nombre' && i != 'adicicionales' && i != 'precios' && i != 'cantidad' && i != 'nota'){
           // console.log([i]);
@@ -133,7 +134,7 @@ const ArticuloInfo = () => {
       return(
         <div className='position-absolute min-vh-100 z-1 bg-black bg-opacity-25 p-0' onClick={handleClickAtras}>
             
-          <div className='col-12 col-sm-12 min-vh-100 border shadow-lg bg-light top-0 start-0 mx-auto z-3' style={{}}>
+          <div className='col-12 col-sm-8 min-vh-100 border shadow-lg bg-light top-0 start-0 mx-auto z-3' style={{}}>
           	<div className='d-flex border-0 border-bottom justify-content-between'>
               <div className='d-flex'>
                 <AiOutlineClose className='fs-4 mt-4 m-3' onClick={handleClickOut}/>
@@ -169,9 +170,9 @@ const ArticuloInfo = () => {
             </div>
             <p className='m-5 text-success mb-0 mt-3'>Cantidad</p>
 						<div className='m-4 row'>
-						  <BsPlusSquareFill className='display-5 col-1' onClick={handleClickCantidadRestar} />
-							<input type="text" className='col-10 btn border-0 bg-transparent border-bottom rounded-0' onChange={handleChangeCatindad} value={orden.cantidad} />
-							<BsPlusSquareFill className='display-5 col-1' onClick={handleClickCantidadSumar} />
+						  <BsPlusSquareFill className='fs-1 col-3 col-sm-1' onClick={handleClickCantidadRestar} />
+							<input type="text" className='col-6 col-sm-10 btn border-0 bg-transparent border-bottom rounded-0' onChange={handleChangeCatindad} value={orden.cantidad} />
+							<BsPlusSquareFill className='fs-1 col-3 col-sm-1' onClick={handleClickCantidadSumar} />
 						</div>  
             <p className='m-5 text-success mb-0 mt-3'>Comentario</p>
 						<input type="text" className='btn bg-transparent col-11 border-0 border-bottom rounded-0 m-4 text-start' placeholder='Introducir comentario' onChange={handleChangeNota} />

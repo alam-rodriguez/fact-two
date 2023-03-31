@@ -203,7 +203,7 @@ const Ventas3 = () => {
 											</div>
 											<hr className='border border-secondary' />
 											<div className='d-flex flex-column align-items-center my-4'>
-													<p className='fw-medium fs-1 m-0'>0.00</p>
+													<p className='fw-medium fs-1 m-0'>{pedido.cambio-pedido.totaldefinitivo}.00</p>
 													<p className='text-secondary m-0'>Cambio</p>
 											</div>
 									</div>
@@ -260,7 +260,7 @@ const Ventas3 = () => {
 						</div>
 						<hr className='border border-secondary' />
 						<div className='d-flex flex-column align-items-center my-4'>
-							<p className='fw-medium fs-1 m-0'>0.00</p>
+							<p className='fw-medium fs-1 m-0'>{pedido.cambio-pedido.totaldefinitivo}.00</p>
 							<p className='text-secondary m-0'>Cambio</p>
 						</div>
 					</div>

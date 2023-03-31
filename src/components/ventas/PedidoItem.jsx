@@ -50,6 +50,8 @@ const PedidoItem = ({orden, totales, setTotales}) => {
         setOrdenView(state => ({...state, costo: coste}))
         setIngredientes(data);
         setcoste(costeItem);
+
+        console.log('first');
     }, [] );
 
     useEffect(()=>{
@@ -60,7 +62,8 @@ const PedidoItem = ({orden, totales, setTotales}) => {
                 totalcurrent += Number(item);
             });
             totalcurrent = totalcurrent * orden.cantidad;
-
+            console.log(totalcurrent);
+            
             setTotales(state => ([...state, totalcurrent]));
             setTotalItem(totalcurrent);
             

@@ -43,8 +43,8 @@ const ReciboItem = ({recibo, i, setReciboSelected, setI}) => {
   }else if(design == 'mobile'){
     return (
         <li className='d-flex align-items-center row' onClick={handleClickItem}>
-            <IoIosCash className='col-2 fs-3' />
-            <div className='col-10 d-flex border-0 border-bottom p-2'>
+            <IoIosCash className='col-2 fs-3 p-0 m-0' />
+            <div className='col-10 d-flex border-0 border-bottom p-2 px-0'>
                 <div className='col-8'>
                     <p className='m-0'>{recibo.total}.00</p>
                     <p className='text-secondary m-0'>{recibo.hora}</p>

@@ -191,14 +191,14 @@ const Ventas = () => {
 			<Clientes />
 			<ArticuloInfo />
 					
-				<section className='col-12 col-sm-8 p-0'>
-					<header className='d-flex justify-content-between bg-success p-4 shadow-lg'>
-						<div className='d-flex'>
-							<FaBars className='fs-3 mt-2 ms-3 text-white' onClick={handleClickMenu} />
-							<p className='fs-3 m-0 ms-4 text-white'>Pagina 1</p>
-						</div>
-						<AiOutlineSearch className='fs-2 mt-2 text-white' />
-					</header>
+			<section className='col-12 col-sm-8 p-0'>
+				<header className='d-flex justify-content-between bg-success p-4 shadow-lg'>
+					<div className='d-flex'>
+						<FaBars className='fs-3 mt-2 ms-3 text-white' onClick={handleClickMenu} />
+						<p className='fs-3 m-0 ms-4 text-white'>Pagina 1</p>
+					</div>
+					<AiOutlineSearch className='fs-2 mt-2 text-white' />
+				</header>
 							<div className='este'>
 									{/* { categorias.length > 0 ?
 											categorias.map((categoria)=>(
@@ -239,7 +239,7 @@ const Ventas = () => {
 							</select>
 	
 							<div>
-									<Pedido />
+								<Pedido />
 							</div>
 	
 							<div className='d-flex position-absolute bg-black bottom-0 align-self-center mb-3 z-0 col-6 col-sm-8' style={{}}>
@@ -250,21 +250,26 @@ const Ventas = () => {
 					</section>
 			</main>
 		)
-	}else if(viewticket){
-		return(
-			<>
-				<Pedido viewticket={viewticket} setViewticket={setViewticket} />
-			</>
-		)
+	// }
+	// else if(viewticket){
+	// 	return(
+	// 		<>
+	// 			<Pedido viewticket={viewticket} setViewticket={setViewticket} />
+	// 		</>
+	// 	)
 	}else if(design == 'mobile'){
 		return (
 			<main className='row m-0'>
 			<Menu />
 			<Clientes />
 			<ArticuloInfo />
-			<Pedido viewticket={viewticket} setViewticket={setViewticket} />
-					
+			{ viewticket ? 
+				<Pedido viewticket={viewticket} setViewticket={setViewticket} />
+			: 
 				<section className='col-12 col-sm-8 p-0'>
+
+					
+
 					<header className='d-flex justify-content-between bg-success p-4 shadow-lg'>
 						<div className='d-flex'>
 							<FaBars className='fs-3 mt-2 ms-3 text-white' onClick={handleClickMenu} />
@@ -287,7 +292,11 @@ const Ventas = () => {
 						<Articulos articulos={articulos} />
 					</div>
 							
-					</section>
+				</section>
+			}
+			
+					
+				
 					{/* <section className='position-relative col-12 col-sm-4 p-0 shadow-lg bg-white min-vh-100 d-flex flex-column'> */}
 							{/* <header className='d-flex justify-content-between bg-white p-4 shadow-sm'>
 									<p className='fs-3 m-0 fw-bold'>Ticket</p>

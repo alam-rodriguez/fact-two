@@ -121,11 +121,18 @@ const Ventas2 = () => {
 
     useEffect(()=>{
         // setCatidadAPagar(pedido.total);
-        console.log(pedido);
+        // console.log(pedido);
+				// console.log('first');
     }, [] );
 
     // Para modificar cantidad a pagar
     const handleChangeCantidadAPagar = e => setCatidadAPagar(e.target.value);
+
+		useEffect(()=>{
+			// console.log(CatidadAPagar)
+			setPedido(state => ({...state, cambio: Number(CatidadAPagar)}));
+			console.log(pedido);
+		}, [CatidadAPagar])
 
     const handleClickCobrar = () => {
         navigate('/ventas/ventas3');
@@ -148,10 +155,10 @@ const Ventas2 = () => {
                 <div className='este'>
                     <Pedido />
                     {/* <Articulos articulos={articulos} /> */}
-                            
-                </div>
-                
+                </div>    
             </section>
+
+
             <section className='col-12 col-sm-8 p-0 shadow-lg  min-vh-100 d-flex flex-column'>
                 <header className='d-flex justify-content-between align-items-center bg-success p-4 shadow-sm' style={{height: 65}}>    
                     <MdOutlineArrowBack className='fs-3 text-white' onClick={handleClickBack} />
@@ -193,35 +200,41 @@ const Ventas2 = () => {
   }else if(design == 'mobile'){
 		return (
 			<main className='row m-0'>
-			<Clientes />				
-			{/* <section className='col-12 col-sm-4 p-0 bg-white order-last order-sm-first border-0 border-top'>
-				<header className='d-flex justify-content-between bg-white p-4 shadow'>
-					<p className='fs-3 m-0 text-black fw-bold'>Ticket</p>
-					<IoMdPersonAdd className='fs-3 mt-2 me-0' onClick={handleClickUser} />  
-				</header>
-				<p className='py-2 px-3 fw-medium border-0 border-bottom'>{pedido.lugar}</p>
-				<div className='este'>
-					<Pedido />						
-				</div>
-			</section> */}
 
+			{/* <Clientes />				
+			<section className='col-12 col-sm-4 p-0 bg-white order-last order-sm-first border-0 border-top'>
+        <header className='d-flex justify-content-between bg-white p-4 shadow'>
+          <p className='fs-3 m-0 text-black fw-bold'>Ticket</p>
+          <IoMdPersonAdd className='fs-3 mt-2 me-0' onClick={handleClickUser} />  
+        </header>
+        <p className='py-2 px-3 fw-medium border-0 border-bottom'>{pedido.lugar}</p>
+        <div className='este'>
+        </div>    
+      </section> */}
+			<div className='este'>
+        <Pedido />
+                    {/* <Articulos articulos={articulos} /> */}
+      </div>  
+			
+			
 			<section className='col-12 col-sm-8 p-0 shadow-lg  min-vh-100 d-flex flex-column'>
 				<header className='d-flex justify-content-between align-items-center bg-success p-4 shadow-sm' style={{height: 65}}>    
 					<MdOutlineArrowBack className='fs-3 text-white' onClick={handleClickBack} />
-									<p className='fs-4 fw-medium ms-2 m-0 text-white'>DIVIDIR</p>
-							</header>
-							<div>
-									<div className='d-flex flex-column align-items-center my-4'>
-											<p className='fw-medium fs-2 m-0'>{pedido.totaldefinitivo}.00</p>
-											<p className='text-secondary m-0'>Catidad total a pagar</p>
-									</div>
-							</div>
+					<p className='fs-4 fw-medium ms-2 m-0 text-white'>DIVIDIR</p>
+				</header>
+				<div>
+					<div className='d-flex flex-column align-items-center my-4'>
+						<p className='fw-medium fs-2 m-0'>{pedido.totaldefinitivo}.00</p>
+						<p className='text-secondary m-0'>Catidad total a pagar</p>
+					</div>
+				</div>
 							
 							<div className='p-3'>
 									<p className='text-success'>Efectivo recibido</p>
 									<div>
 											{/* <div className='row gap-3'> */}
 													{/* <IoIosCash className='fs-4 col-1 mt-2' /> */}
+													
 													<input type="number" className='btn bg-transparent border-0 border-bottom rounded-0 col-12 mx-auto text-start ps-0' value={CatidadAPagar} onChange={handleChangeCantidadAPagar}/>
 											{/* </div> */}
 											<button className='border p-3 col-12 mt-4 mx-auto d-flex justify-content-center align-items-center gap-2' onClick={handleClickCobrar}>
