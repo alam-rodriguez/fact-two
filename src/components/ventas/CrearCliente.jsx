@@ -16,6 +16,9 @@ import { guardarCliente } from '../../firebase/firebase';
 // Context
 import { AppContext } from '../../context/AppContext';
 
+// React Toastify
+import { ToastContainer, toast } from 'react-toastify';
+
 const CrearCliente = ({handleClickBack}) => {
 
 	const { pedido, setPedido, view, setView,userSelected, setUserSelected, emailUser, setEmailUser, viewMenu, setviewMenu, viewUser, setViewUser, viewArticulos, setViewArticulos } = useContext(AppContext);
@@ -41,11 +44,25 @@ const CrearCliente = ({handleClickBack}) => {
 
 	const handleClickGuardar = async () => {
 
-		const res = await guardarCliente(`clientes-${emailUser}`, newUser.id, newUser)
-		if(res =='cliente creado'){
-			setPedido(state => ({...state, cliente: newUser}));
-			setViewUser(3);
-			setUserSelected( newUser );
+		if(newUser.nombre.length < 3 || newUser.nombre == null){
+			toast.warn('El nombre debe contener por lo menos 3 caracteres, pero solo contiene ' +newUser.nombre.length, {
+				position: "top-center",
+				autoClose: 5000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+				theme: "light",
+			});	
+		}else {
+			// console.log(newUser)
+			const res = await guardarCliente(`clientes-${emailUser}`, newUser.id, newUser)
+			if(res =='cliente creado'){	
+				setPedido(state => ({...state, cliente: newUser}));
+				setViewUser(0);
+				setUserSelected( newUser );
+			}
 		}
 	}
 
