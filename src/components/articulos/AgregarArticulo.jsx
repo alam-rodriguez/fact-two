@@ -99,8 +99,19 @@ const AgregarArticulo = () => {
 
   
   const handleClickAgregarIngrediente = () => setInputIngredientes(state => ([...state, 'input']));
+	const handleClickEliminarIngrediente = () => {
+		// console.log(ingredientes[inputIngredientes.length - 1]);
+		inputIngredientes.pop();
+		inputIngredientes.pop();
+		handleClickAgregarIngrediente();
+	}
 
 	const handleClickAgregarIngredienteAdicional = () => setInpuIngredientesAdicionales(state => ([...state, 'input']));
+	const handleClickEliminarIngredienteAdicional = () => {	
+		inpuIngredientesAdicionales.pop();
+		inpuIngredientesAdicionales.pop();
+		handleClickAgregarIngredienteAdicional();
+	}
 
 	const handleChangeNombre = (e) => setNewArticulo(state => ({...state, nombre: e.target.value}));
 
@@ -110,10 +121,36 @@ const AgregarArticulo = () => {
 
 	useEffect( () => {
 		const setNuevoArticulo = async () => {
+			console.log(newArticulo);
+			
 			if(sendInfo){
-				console.log(newArticulo);
-				const res = await agregarArticuloff(`articulos-${emailUser}`, newArticulo.id, newArticulo);
-				if(imgFile != null){
+				if(newArticulo.nombre.length < 3){
+					toast.warn('El nombre del articulo debe contener minimo 3 caracteres, y solo contiene '+newArticulo.nombre.length, {
+						position: "top-center",
+						autoClose: 5000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+						theme: "light",
+					});
+					setSendInfo(false);
+				}else if(newArticulo.adicionales == null){
+					toast.warn('Debe agregar el precio', {
+						position: "top-center",
+						autoClose: 5000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+						theme: "light",
+					});
+					setSendInfo(false);
+				}else {
+					const res = await agregarArticuloff(`articulos-${emailUser}`, newArticulo.id, newArticulo);
+					if(imgFile != null){
 					const resImg = await subirImagen(newArticulo.img, imgFile)
 					console.log(resImg);
 
@@ -143,6 +180,7 @@ const AgregarArticulo = () => {
 						navigate('/articulos');
 					}
 				}
+				}
 			}
 		}
 		setNuevoArticulo();
@@ -165,7 +203,7 @@ const AgregarArticulo = () => {
 					<div className='bg-light shadow-lg col-8 mt-3 p-3'>
 	
 						<div className="form-floating mb-3">
-							<input type="tetx" className="btn text-start form-control rounded-0 border-0 border-bottom fs-3" id="floatingInput" placeholder="name@example.com" onChange={handleChangeNombre}/>
+							<input type="text" minLength='3' className="btn text-start form-control rounded-0 border-0 border-bottom fs-3" id="floatingInput" placeholder="name@example.com" onChange={handleChangeNombre}/>
 							<label htmlFor="floatingInput">Nombre</label>
 						</div>
 	
@@ -199,6 +237,7 @@ const AgregarArticulo = () => {
 									))}
 								</div>
 								<button type="button" className="btn btn-success align-self-center my-3" onClick={handleClickAgregarIngrediente}>Agregar Ingrediente adional</button>
+								<button type="button" className="btn btn-danger align-self-center" onClick={handleClickEliminarIngrediente}>Eliminar input</button>
 							</div>
 							{/* GRUOP INPUTS 2 */}
 							{ !inputAdicionales ?
@@ -217,6 +256,7 @@ const AgregarArticulo = () => {
 												))}
 											</div>
 											<button type="button" className="btn btn-success align-self-center my-3" onClick={handleClickAgregarIngredienteAdicional}>Agregar Ingrediente</button>
+											<button type="button" className="btn btn-danger align-self-center" onClick={handleClickEliminarIngredienteAdicional}>Eliminar input</button>
 										</div>
 								</div>	
 							:

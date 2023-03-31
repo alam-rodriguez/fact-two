@@ -348,7 +348,7 @@ const EditarArticulo = () => {
 									<p className='col-6 text-center text-success fs-6 fw-medium'>Ingredientes</p>
 									<p className='col-6 text-center text-success fs-6 fw-medium'>Precios</p>
 								</div>
-								<div className='input-ingredientes d-flex justify-content-center'>
+								<div className='input-ingredientes'>
 									{ ingredientes != null && ingredientesPrecios != null ? 
 										inputIngredientes.map((input, i)=>(
 											<div className='d-flex' key={i}>
