@@ -15,6 +15,7 @@ import CrearCliente from './CrearCliente';
 import PerfilCliente from './PerfilCliente';
 import PerfilCliente2 from './PerfilCliente2';
 import Perfiles from './Perfiles';
+import EditarCliente from './EditarCliente';
 
 // Firebase
 import { obtenerClientes } from '../../firebase/firebase';
@@ -73,7 +74,7 @@ const Clientes = () => {
 
   if(viewUser == 1){
     return (
-      <div className='position-absolute min-vh-100 z-1 bg-black bg-opacity-25 p-0' onClick={handleClickAtras}>
+      <div className='position-absolute min-vh-100 z-1 bg-black bg-opacity-50 p-0' onClick={handleClickAtras}>
             
         <div className='col-12 col-sm-8 min-vh-100 border shadow-lg bg-light top-0 start-0 mx-auto' style={{}}>
           <div className='d-flex border-0 border-bottom'>
@@ -120,8 +121,8 @@ const Clientes = () => {
     return(
       <PerfilCliente2 handleClickBack={handleClickBack} />
     )
-  }else {
-    return <></>
+  }else if(viewUser == 5) {
+    return <EditarCliente clienteActivo={clienteActivo} />
   }
   
   // else if( viewUser == 3) {
@@ -141,4 +142,4 @@ const Clientes = () => {
   //   }// <Perfiles handleClickBack={handleClickBack} clienteActivo={clienteActivo} />
 }
 
-export default Clientes
+export default Clientes;

@@ -181,6 +181,35 @@ export const obtenerClientes = async (colecion) => {
     return data;
 }
 
+// Actualizar Cliente
+export const actualizarCliente = async (colecion, documento, editUser) => {
+    try {
+        const docRef = doc(db, colecion, documento);
+        const res = await updateDoc(docRef, {
+            id: documento,
+            nombre: editUser.nombre,
+            correo: editUser.correo,
+            telefono: editUser.telefono,
+            direccion: editUser.direccion,
+            nota: editUser.nota,
+        });
+        console.log(res)
+        return 'cliente actualizado';
+    } catch (error) {
+        return error.code;
+    }
+}
+
+// Borrar Clientes
+export const borrarCliente = async (colecion, documento) => {
+    try {
+        await deleteDoc(doc(db, colecion, documento));
+        return 'cliente borrado';
+    } catch (error) {
+        return error.code;
+    }
+}
+
 // Obtener todos los articulos sin importar su categoria
 export const obtenerTodosArticulos = async(colecion) => {
     const querySnapshot = await getDocs(collection(db, `articulos-${colecion}`))

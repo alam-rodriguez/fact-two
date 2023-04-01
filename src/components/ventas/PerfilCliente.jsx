@@ -6,9 +6,10 @@ import { v4 as uuid} from 'uuid'
 
 // React Icons
 import { AiOutlineClose, AiOutlineSearch } from 'react-icons/ai';
-import { IoMdArrowBack, IoMdMail } from 'react-icons/io';
+import { IoMdArrowBack, IoMdMail, IoMdStar } from 'react-icons/io';
 import { HiUser, HiUserCircle } from 'react-icons/hi';
-import { MdLocalPhone, MdLocationOn, MdSpeakerNotes } from 'react-icons/md';
+import { MdLocalPhone, MdLocationOn, MdShoppingBasket, MdSpeakerNotes } from 'react-icons/md';
+import { FaRegCalendarAlt } from 'react-icons/fa';
 
 // Firebase
 import { guardarCliente } from '../../firebase/firebase';
@@ -43,8 +44,12 @@ const PerfilCliente = ({handleClickBack, clienteActivo}) => {
 		}
 	}
 
+	const handleClickEditar = () => {
+		setViewUser(5);
+	}
+
   return (
-    <div className='position-absolute min-vh-100 z-1 bg-black bg-opacity-25 p-0' onClick={handleClickAtras}>
+    <div className='position-absolute min-vh-100 z-1 bg-black bg-opacity-50 p-0' onClick={handleClickAtras}>
             
       <div className='col-12 col-sm-8 min-vh-100 border shadow-lg bg-light top-0 start-0 mx-auto' style={{}}>
 				<div className='d-flex justify-content-between border-0 border-bottom'>
@@ -66,36 +71,49 @@ const PerfilCliente = ({handleClickBack, clienteActivo}) => {
 								<p className='m-0'>{clienteActivo.telefono}</p>
 							</div>
 						: <></>
-					}
-					{ (clienteActivo.dirrecion != '') ? 
-						<div className='d-flex align-items-center mt-3'>
-							<MdLocationOn className='fs-4 mt-1 me-4' />
-							<p className='m-0'>{clienteActivo.dirrecion}</p>
+						}
+						{ (clienteActivo.dirrecion != '') ? 
+							<div className='d-flex align-items-center mt-4'>
+								<MdLocationOn className='fs-4 mt-1 me-4' />
+								<p className='m-0'>{clienteActivo.dirrecion}</p>
+							</div>
+						: null }
+						<hr />
+					</div>
+					<div className='m-3'>
+
+						<div className='d-flex align-items-center mb-4'>
+							<IoMdStar className='fs-3' />
+							<div className='ms-4'>
+								<p className='m-0'>0.00</p>
+								<p className='text-secondary m-0'>Puntos</p>
+							</div>
 						</div>
-					: null }
-					<hr />
+
+						<div className='d-flex align-items-center mb-4'>
+							<MdShoppingBasket className='fs-3' />
+							<div className='ms-4'>
+								<p className='m-0'>1</p>
+								<p className='text-secondary m-0'>Visita</p>
+							</div>
+						</div>
+
+						<div className='d-flex align-items-center mb-4'>
+							<FaRegCalendarAlt className='fs-3' />
+							<div className='ms-4'>
+								<p className='m-0'>30/3/23, 9:15 P. m.</p>
+								<p className='text-secondary m-0'>Ultima visita</p>
+							</div>
+						</div>
 
 					</div>
-					{/* <div className='d-flex m-4 mt-5 my-5'>
-						<HiUser className='fs-3 mt-1' />
-						<input type="text" className='btn bg-transparent form-control text-start border-0 border-bottom rounded-0 ms-3' placeholder='Nombre' onChange={handleChangeNombre}/>
+
+					<div>
+						<button className='btn bg-transparent border-0 text-success fw-medium' onClick={handleClickEditar}>EDITAR PERFIL</button>
+						<button className='btn bg-transparent border-0 text-secondary fw-medium disabled'>CANJEAR PUNTOS</button>
+						<button className='btn bg-transparent border-0 text-success fw-medium'>VER COMPRAS</button>
 					</div>
-					<div className='d-flex m-4 mt-5 my-5'>
-						<IoMdMail className='fs-3 mt-1' />
-						<input type="email" className='btn bg-transparent form-control text-start border-0 border-bottom rounded-0 ms-3' placeholder='Dirrecion de correo electronico' onChange={handleChangeEmail}/>
-					</div>
-					<div className='d-flex m-4 mt-5 my-5'>
-						<MdLocalPhone className='fs-3 mt-1' />
-						<input type="number" className='btn bg-transparent form-control text-start border-0 border-bottom rounded-0 ms-3' placeholder='Numero de telefono' onChange={handleChangeTelefono}/>
-					</div>
-					<div className='d-flex m-4 mt-5 my-5'>
-						<MdLocationOn className='fs-3 mt-1' />
-						<input type="text" className='btn bg-transparent form-control text-start border-0 border-bottom rounded-0 ms-3' placeholder='Dirrecion' onChange={handleChangeDirrecion}/>
-					</div>
-					<div className='d-flex m-4 mt-5 my-5'>
-						<MdSpeakerNotes className='fs-3 mt-1' />
-						<input type="text" className='btn bg-transparent form-control text-start border-0 border-bottom rounded-0 ms-3' placeholder='Nota' onChange={handleChangeNota}/>
-					</div> */}
+					
 				</div>
       </div>
 

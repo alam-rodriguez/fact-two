@@ -74,7 +74,7 @@ const CrearCliente = ({handleClickBack}) => {
   }
 
   return (
-    <div className='position-absolute min-vh-100 z-1 bg-black bg-opacity-25 p-0' onClick={handleClickAtras}>
+    <div className='position-absolute min-vh-100 z-1 bg-black bg-opacity-50 p-0' onClick={handleClickAtras}>
             
       <div className='col-12 col-sm-8 min-vh-100 border shadow-lg bg-light top-0 start-0 mx-auto' style={{}}>
 				<div className='d-flex justify-content-between border-0 border-bottom'>
