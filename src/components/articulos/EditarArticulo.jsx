@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 
 // Firebase 
-import { agregarCategoria, obtenerCategoria, agregarArticulo as agregarArticuloff, subirImagen, ontenerImagen, actualizarArticulo, borrarArticulo } from '../../firebase/firebase'
+import { agregarCategoria, obtenerCategoria, agregarArticulo as agregarArticuloff, subirImagen, ontenerImagen, actualizarArticulo, borrarArticulo, borrarImagen } from '../../firebase/firebase'
 
 // Context
 import { AppContext } from '../../context/AppContext';
@@ -97,15 +97,19 @@ const EditarArticulo = () => {
 					// console.log()
 					// addIngrediente(ingrediente, articuloSelect.adicionales[ingrediente]); 
 				});
+
 				setIngredientes(ingredientes);
 				setIngredientesPrecios(ingredientesPrecios)
 				// console.log(ingredientes, ingredientesPrecios);
 				setInpuIngredientesAdicionales([]);
-				Object.keys(articuloSelect.precios).map((i)=>{
-					if(i != ''){
-						setInputsAdicionales(true);
-					}
-				})
+				if(articuloSelect.precios != null){
+					Object.keys(articuloSelect.precios).map((i)=>{
+						if(i != ''){
+							setInputsAdicionales(true);
+						}
+					})
+				}
+				
 				// if(articuloSelect.precios[''] == ''){
 
 				// }else {
@@ -238,41 +242,58 @@ const EditarArticulo = () => {
 	useEffect( () => {
 		const setNuevoArticulo = async () => {
 			if(sendInfo){
-				console.log(articuloActualizado);
-				let res = await	actualizarArticulo(emailUser, articuloActualizado.id, articuloActualizado);
+				const promesa = async () => {
+					try {
+						console.log(articuloActualizado);
+						let res = await	actualizarArticulo(emailUser, articuloActualizado.id, articuloActualizado);
 
-				let resf;
-			  
-				if(imgFile != null){
-					resf = await subirImagen(`productos-${emailUser}/${articuloActualizado.id}`, imgFile);
+						let resf;
+					
+						if(imgFile != null){
+							resf = await subirImagen(`productos-${emailUser}/${articuloActualizado.id}`, imgFile);
+						}
+						navigate('/articulos');
+					} catch (error) {
+						navigate('/articulos');
+					}
 				}
 
-				if(res == 'articulo actualizado' && resf == 'info subida' || res == 'articulo actualizado'){
-					handleClickAtras();
-					toast.success('Articulo actualizado', {
-						position: "top-center",
-						autoClose: 5000,
-						hideProgressBar: false,
-						closeOnClick: true,
-						pauseOnHover: true,
-						draggable: true,
-						progress: undefined,
-						theme: "light",
-					});
-				}else {
-					toast.error('Ha ocurrido un error, no se a podido actualizar el articulo', {
-						position: "top-right",
-						autoClose: 5000,
-						hideProgressBar: false,
-						closeOnClick: true,
-						pauseOnHover: true,
-						draggable: true,
-						progress: undefined,
-						theme: "light",
-					});
-					console.log(res, resf);
-					handleClickAtras();
-				}
+				toast.promise(
+					promesa,
+					{
+						pending: 'Creando articulo',
+						success: 'Articulo creado',
+						error: 'ha ocurrido un error',
+					}
+				);
+
+
+				// if(res == 'articulo actualizado' && resf == 'info subida' || res == 'articulo actualizado'){
+				// 	handleClickAtras();
+				// 	toast.success('Articulo actualizado', {
+				// 		position: "top-center",
+				// 		autoClose: 5000,
+				// 		hideProgressBar: false,
+				// 		closeOnClick: true,
+				// 		pauseOnHover: true,
+				// 		draggable: true,
+				// 		progress: undefined,
+				// 		theme: "light",
+				// 	});
+				// }else {
+				// 	toast.error('Ha ocurrido un error, no se a podido actualizar el articulo', {
+				// 		position: "top-right",
+				// 		autoClose: 5000,
+				// 		hideProgressBar: false,
+				// 		closeOnClick: true,
+				// 		pauseOnHover: true,
+				// 		draggable: true,
+				// 		progress: undefined,
+				// 		theme: "light",
+				// 	});
+				// 	console.log(res, resf);
+				// 	handleClickAtras();
+				// }
 
 			}
 		}
@@ -292,18 +313,32 @@ const EditarArticulo = () => {
 	}
 
 	const handleClickBorrar = async () => {
-		await borrarArticulo(emailUser, articuloActualizado.id);
-		toast('Articulo borrado', {
-			position: "top-center",
-			autoClose: 5000,
-			hideProgressBar: false,
-			closeOnClick: true,
-			pauseOnHover: true,
-			draggable: true,
-			progress: undefined,
-			theme: "light",
-		});
-		navigate('/articulos');
+		const resArticulo = await borrarArticulo(emailUser, articuloActualizado.id);
+		let resImagen = 'sin imagen';
+		console.log( img );
+		if(img != null){
+			const resImg = await borrarImagen(`productos-${emailUser}`,articuloActualizado.id);
+			if(resImg == 'imagen borrada'){
+				resImagen = 'imagen borrada';
+			}
+		}
+		if(resArticulo == 'articulo borrado' && resImagen == 'sin imagen' || resArticulo == 'articulo borrado' && resImagen == 'imagen borrada'){
+			toast('Articulo borrado', {
+				position: "top-center",
+				autoClose: 5000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+				theme: "light",
+			});
+			navigate('/articulos');
+		}else {
+			alert('ha ocurrido un error');
+		}
+		// console.log(articuloActualizado.id)
+		
 	}
 
   if(design == 'computer'){

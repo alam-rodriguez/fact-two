@@ -119,9 +119,13 @@ const AgregarArticulo = () => {
 
 	const handleChangeCategoria = (e) => setNewArticulo(state => ({...state, categoria: e.target.value}));
 
+	const [navegar, setNavegar] = useState(false);
+
 	useEffect( () => {
 		const setNuevoArticulo = async () => {
 			console.log(newArticulo);
+
+			// let cargando;
 			
 			if(sendInfo){
 				if(newArticulo.nombre.length < 3){
@@ -149,38 +153,31 @@ const AgregarArticulo = () => {
 					});
 					setSendInfo(false);
 				}else {
-					const res = await agregarArticuloff(`articulos-${emailUser}`, newArticulo.id, newArticulo);
-					if(imgFile != null){
-					const resImg = await subirImagen(newArticulo.img, imgFile)
-					console.log(resImg);
 
-					if( res == 'info subida' && resImg == 'info subida'){
-						toast.success('Articulo agregado', {
-							position: "top-center",
-							autoClose: 5000,
-							hideProgressBar: false,
-							closeOnClick: true,
-							pauseOnHover: true,
-							draggable: true,
-							progress: undefined,
-							theme: "light",
-						});
-						navigate('/articulos');
-					}	else {
-						toast.error('Ha ocurrido un error, no se a podido agregar el articulo', {
-							position: "top-right",
-							autoClose: 5000,
-							hideProgressBar: false,
-							closeOnClick: true,
-							pauseOnHover: true,
-							draggable: true,
-							progress: undefined,
-							theme: "light",
-						});
-						navigate('/articulos');
+					const promesa = async () => {
+						try {
+							const res = await agregarArticuloff(`articulos-${emailUser}`, newArticulo.id, newArticulo);
+							let resImg = 'sin imagen';
+							if(imgFile != null){
+								resImg = await subirImagen(newArticulo.img, imgFile)
+								console.log(resImg);
+							}
+							navigate('/articulos');
+						} catch (error) {
+							return error.code;
+						}
 					}
+					
+					toast.promise(
+						promesa,
+						{
+							pending: 'Creando articulo',
+							success: 'Articulo creado',
+							error: 'ha ocurrido un error',
+						}
+					);
 				}
-				}
+
 			}
 		}
 		setNuevoArticulo();

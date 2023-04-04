@@ -5,7 +5,7 @@ import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, si
 
 import { getFirestore, doc, setDoc, collection, getDocs, query, where, updateDoc, deleteDoc } from 'firebase/firestore';
 
-import { getStorage, ref, uploadBytes, getDownloadURL} from 'firebase/storage'
+import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject} from 'firebase/storage'
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -251,7 +251,23 @@ export const actualizarArticulo = async (colecion, documento, articuloActualizad
 }
 
 export const borrarArticulo = async (colecion, documento) => {
-    await deleteDoc(doc(db, `articulos-${colecion}`, documento));
+    try {
+        await deleteDoc(doc(db, `articulos-${colecion}`, documento));
+        return 'articulo borrado';
+    } catch (error) {
+        return error.code;
+    }
+}
+
+export const borrarImagen = async (colecion, dcumento) => {
+    try {
+        const deserRef = ref(store, `${colecion}/${dcumento}`);
+        await deleteObject(deserRef);
+        return 'imagen borrada';
+    } catch (error) {
+        return error.code;
+    }
+
 }
 
 

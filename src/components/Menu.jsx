@@ -69,7 +69,7 @@ const Menu = () => {
           </ul>
         </nav>
         
-        <div className='w-100 bg-black opacity-25' onClick={()=>setviewMenu(false)}>
+        <div className='w-100 bg-black opacity-50' onClick={()=>setviewMenu(false)}>
 
         </div>
       </div>

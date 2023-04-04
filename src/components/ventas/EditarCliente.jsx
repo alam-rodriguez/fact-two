@@ -92,7 +92,7 @@ const EditarCliente = ({handleClickBacksa, clienteActivo}) => {
 	const handleClickAtras = (e) => {
     const target = e.target.classList[0];
     if(target == 'position-absolute'){
-			setViewUser(0)
+		setViewUser(0);
     }
   }
 

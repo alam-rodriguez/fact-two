@@ -89,9 +89,7 @@ const Articulos2 = ({setViewArticulos}) => {
               <ArticulosView key={articulo.id} articulo={articulo} />
             ))
           : 
-            <>
-              <p>No hay articulos</p>  
-            </> 
+            <p>No hay articulos</p>    
             }
   
         </section>
